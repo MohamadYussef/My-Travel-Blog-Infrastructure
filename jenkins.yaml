@@ -93,6 +93,8 @@ spec:
             - name: docker
               subPath: docker
               mountPath: /usr/local/bin/docker
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
             - name: kubectl
               subPath: kubectl
               mountPath: /usr/local/bin/kubectl
@@ -104,3 +106,6 @@ spec:
           emptyDir: {}
         - name: kubectl
           emptyDir: {}
+        - name: docker-socket
+          hostPath:
+            path: /var/run/desktop/docker.sock
