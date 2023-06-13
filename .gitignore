@@ -1,2 +1,5 @@
 /Dockerfile
 /jenkins.bak
+*/terraform.tfstate.backup
+*/terraform.tfstate
+*/.terraform
