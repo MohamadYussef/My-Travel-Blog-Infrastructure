@@ -6,7 +6,7 @@ resource "aws_subnet" "public_1" {
   vpc_id = aws_vpc.main.id
 
   # The CIDR block for the subnet.
-  cidr_block = "10.1.0.0/24"
+  cidr_block = "10.0.1.0/24"
 
   # The AZ for the subnet.
   availability_zone = "us-east-1a"
@@ -27,7 +27,7 @@ resource "aws_subnet" "public_2" {
   vpc_id = aws_vpc.main.id
 
   # The CIDR block for the subnet.
-  cidr_block = "10.2.0.0/24"
+  cidr_block = "10.0.2.0/24"
 
   # The AZ for the subnet.
   availability_zone = "us-east-1b"
@@ -48,7 +48,7 @@ resource "aws_subnet" "private_1" {
   vpc_id = aws_vpc.main.id
 
   # The CIDR block for the subnet.
-  cidr_block = "10.3.0.0/24"
+  cidr_block = "10.0.3.0/24"
 
   # The AZ for the subnet.
   availability_zone = "us-east-1a"
@@ -66,7 +66,7 @@ resource "aws_subnet" "private_2" {
   vpc_id = aws_vpc.main.id
 
   # The CIDR block for the subnet.
-  cidr_block = "10.4.0.0/24"
+  cidr_block = "10.0.4.0/24"
 
   # The AZ for the subnet.
   availability_zone = "us-east-1b"
