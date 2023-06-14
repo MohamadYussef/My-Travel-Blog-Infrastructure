@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: jenkins
+
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -9,25 +10,27 @@ metadata:
   name: jenkins-pv
 spec:
   capacity:
-    storage: 5Gi
+    storage: 5Gi # Match the size to the EBS volume size
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: /var/lib/k8s-pvs/jenkins-pv
+  awsElasticBlockStore:
+    volumeID: vol-05229c39a47d4ace1 # Replace with the EBS volume ID from Terraform
+    fsType: ext4 # Specify the desired filesystem type
+
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: jenkins-pvc
-  namespace: jenkins
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 5Gi # Match the size to the EBS volume size
   storageClassName: ""
   volumeName: jenkins-pv
+
 ---
 apiVersion: v1
 kind: Service
@@ -108,4 +111,4 @@ spec:
           emptyDir: {}
         - name: docker-socket
           hostPath:
-            path: /var/run/desktop/docker.sock
+            path: /var/run/docker.sock

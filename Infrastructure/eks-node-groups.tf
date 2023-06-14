@@ -62,6 +62,7 @@ resource "aws_iam_instance_profile" "nodes_general_instance_profile" {
 }
 
 # Create security group for SSH access to nodes
+
 resource "aws_security_group" "ssh_access" {
   name        = "eks-node-ssh-access"
   description = "Allow SSH access to EKS nodes"
@@ -70,6 +71,18 @@ resource "aws_security_group" "ssh_access" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -131,7 +144,7 @@ resource "aws_eks_node_group" "nodes_general" {
   }
 
   # Kubernetes version
-  version = "1.27"
+  version = "1.23"
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
@@ -139,6 +152,7 @@ resource "aws_eks_node_group" "nodes_general" {
     aws_iam_role_policy_attachment.amazon_eks_worker_node_policy_general,
     aws_iam_role_policy_attachment.amazon_eks_cni_policy_general,
     aws_iam_role_policy_attachment.amazon_ec2_container_registry_read_only,
+    aws_iam_role_policy_attachment.amazon_eks_cluster_policy
   ]
 
   remote_access {
